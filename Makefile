@@ -1,8 +1,3 @@
-.PHONY: src-gen
-
-src-gen:
-	python3 scripts/gen_bpftrace.py
-
-cert-gen:
-	chmod u+x scripts/gen_certs.sh
-	./scripts/gen_certs.sh
+.PHONY: build
+build:
+	GOOS=linux GOARCH=amd64 go build -o main
