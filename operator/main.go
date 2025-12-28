@@ -27,7 +27,7 @@ func main() {
 	cfg := configs.LoadConfigs()
 
 	// set logrus logging
-	logging.SetLogger(cfg.LogLevel, cfg.JSONLog)
+	logging.SetLogger(cfg.Logger.Level, cfg.Logger.JSON)
 
 	// register http handlers
 	http.HandleFunc("/health", handlers.Health)

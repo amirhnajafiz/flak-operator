@@ -1,16 +1,16 @@
 package configs
 
-// Default returns a default viper instance.
+// Default returns a default Config instance.
 func Default() Config {
 	return Config{
-		LogLevel: "info",
-		JSONLog:  false,
-		TLS: struct {
-			Enable   bool   "koanf:\"enable\""
-			CertPath string "koanf:\"cert_path\""
-			KeyPath  string "koanf:\"key_path\""
-		}{
-			Enable: false,
+		Logger: LoggerConfig{
+			Level: "info",
+			JSON:  false,
+		},
+		TLS: TLSConfig{
+			Enable:   true,
+			KeyPath:  "/etc/flap/tls/tls.key",
+			CertPath: "/etc/flap/tls/tls.crt",
 		},
 	}
 }

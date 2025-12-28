@@ -13,21 +13,31 @@ import (
 	"github.com/tidwall/pretty"
 )
 
-const Prefix = "flap_"
+const (
+	// Prefix indicates environment variables prefix.
+	Prefix = "FLAP_"
+)
 
-// Config hold the operator tune parameters.
-// all configuration parameters must be set as environment variables or as a `.env` file.
-type Config struct {
-	LogLevel string `koanf:"log_level"`
-	JSONLog  bool   `koanf:"json_log"`
-	TLS      struct {
-		Enable   bool   `koanf:"enable"`
-		CertPath string `koanf:"cert_path"`
-		KeyPath  string `koanf:"key_path"`
-	} `koanf:"tls"`
+// LoggerConfig holds the logger tune parameters.
+type LoggerConfig struct {
+	Level string `koanf:"level"`
+	JSON  bool   `koanf:"json"`
 }
 
-// LoadConfigs reads the env variables into a Config struct.
+// TLSConfig holds the tls parameters.
+type TLSConfig struct {
+	Enable   bool   `koanf:"enable"`
+	CertPath string `koanf:"cert_path"`
+	KeyPath  string `koanf:"key_path"`
+}
+
+// Config hold the operator tune parameters.
+type Config struct {
+	Logger LoggerConfig `koanf:"logger"`
+	TLS    TLSConfig    `koanf:"tls"`
+}
+
+// LoadConfigs reads the config parameters from config.yml and env variables.
 func LoadConfigs() *Config {
 	var instance Config
 
