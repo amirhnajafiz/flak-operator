@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/amirhnajafiz/flap/pkg/admission"
+	"github.com/amirhnajafiz/flap-operator/pkg/admission"
 
 	"github.com/wI2L/jsondiff"
 	admissionv1 "k8s.io/api/admission/v1"

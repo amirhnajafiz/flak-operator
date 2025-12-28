@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/amirhnajafiz/flap/include/handlers/hooks"
-	"github.com/amirhnajafiz/flap/pkg/admission"
+	"github.com/amirhnajafiz/flap-operator/include/handlers/hooks"
+	"github.com/amirhnajafiz/flap-operator/pkg/admission"
 
 	"github.com/sirupsen/logrus"
 	"k8s.io/apimachinery/pkg/runtime/serializer"

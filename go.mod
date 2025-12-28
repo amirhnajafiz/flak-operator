@@ -1,4 +1,4 @@
-module github.com/amirhnajafiz/flap
+module github.com/amirhnajafiz/flap-operator
 
 go 1.25.3
 

@@ -3,10 +3,10 @@ package main
 import (
 	"net/http"
 
-	"github.com/amirhnajafiz/flap/include/cmd"
-	"github.com/amirhnajafiz/flap/include/configs"
-	"github.com/amirhnajafiz/flap/include/handlers"
-	"github.com/amirhnajafiz/flap/include/telemetry/logging"
+	"github.com/amirhnajafiz/flap-operator/include/cmd"
+	"github.com/amirhnajafiz/flap-operator/include/configs"
+	"github.com/amirhnajafiz/flap-operator/include/handlers"
+	"github.com/amirhnajafiz/flap-operator/include/telemetry/logging"
 
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
