@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/amirhnajafiz/flap/include/cmd"
@@ -25,12 +24,7 @@ func init() {
 
 func main() {
 	// read configs
-	cfg, err := configs.LoadConfigs()
-	if err != nil {
-		panic(
-			fmt.Sprintf("failed to load configs: %v", err),
-		)
-	}
+	cfg := configs.LoadConfigs()
 
 	// set logrus logging
 	logging.SetLogger(cfg.LogLevel, cfg.JSONLog)

@@ -1,47 +1,76 @@
 package configs
 
 import (
+	"encoding/json"
 	"log"
 	"strings"
+
+	"github.com/knadh/koanf/parsers/yaml"
+	"github.com/knadh/koanf/providers/env"
+	"github.com/knadh/koanf/providers/file"
+	"github.com/knadh/koanf/providers/structs"
+	"github.com/knadh/koanf/v2"
+	"github.com/tidwall/pretty"
 )
+
+const Prefix = "flap_"
 
 // Config hold the operator tune parameters.
 // all configuration parameters must be set as environment variables or as a `.env` file.
 type Config struct {
-	LogLevel string `mapstructure:"log_level"`
-	JSONLog  bool   `mapstructure:"json_log"`
+	LogLevel string `koanf:"log_level"`
+	JSONLog  bool   `koanf:"json_log"`
 	TLS      struct {
-		Enable   bool   `mapstructure:"enable"`
-		CertPath string `mapstructure:"cert_path"`
-		KeyPath  string `mapstructure:"key_path"`
-	} `mapstructure:"tls"`
+		Enable   bool   `koanf:"enable"`
+		CertPath string `koanf:"cert_path"`
+		KeyPath  string `koanf:"key_path"`
+	} `koanf:"tls"`
 }
 
 // LoadConfigs reads the env variables into a Config struct.
-func LoadConfigs() (*Config, error) {
-	v := Default()
+func LoadConfigs() *Config {
+	var instance Config
 
-	// read from `.env`
-	v.SetConfigFile(".env")
-	v.AddConfigPath(".")
+	k := koanf.New(".")
 
-	// bind env variables automatically
-	v.AutomaticEnv()
-
-	// set prefix
-	v.SetEnvPrefix("flap")
-	v.SetEnvKeyReplacer(strings.NewReplacer(".", "__"))
-
-	// read configs
-	if err := v.ReadInConfig(); err != nil {
-		log.Printf("failed to read config file: %v\n", err)
+	// load default configuration from file
+	err := k.Load(structs.Provider(Default(), "koanf"), nil)
+	if err != nil {
+		log.Fatalf("error loading default: %s", err)
 	}
 
-	// unmarchal the configs into a config instance
-	var cfg Config
-	if err := v.Unmarshal(&cfg); err != nil {
-		return nil, err
+	// load configuration from file
+	err = k.Load(file.Provider("config.yml"), yaml.Parser())
+	if err != nil {
+		log.Printf("error loading config.yml: %s", err)
 	}
 
-	return &cfg, nil
+	// load environment variables
+	err = k.Load(env.Provider(Prefix, ".", func(s string) string {
+		return strings.ReplaceAll(strings.ToLower(
+			strings.TrimPrefix(s, Prefix)), "__", ".")
+	}), nil)
+	if err != nil {
+		log.Printf("error loading environment variables: %s", err)
+	}
+
+	err = k.Unmarshal("", &instance)
+	if err != nil {
+		log.Fatalf("error unmarshalling config: %s", err)
+	}
+
+	indent, err := json.MarshalIndent(instance, "", "\t")
+	if err != nil {
+		log.Fatalf("error marshaling config to json: %s", err)
+	}
+
+	indent = pretty.Color(indent, nil)
+	tmpl := `
+	================ Loaded Configuration ================
+	%s
+	======================================================
+	`
+	log.Printf(tmpl, string(indent))
+
+	return &instance
 }
