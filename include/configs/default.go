@@ -9,8 +9,8 @@ func Default() Config {
 		},
 		TLS: TLSConfig{
 			Enable:   true,
-			KeyPath:  "/etc/flap/tls/tls.key",
-			CertPath: "/etc/flap/tls/tls.crt",
+			KeyPath:  "/etc/flak/tls/tls.key",
+			CertPath: "/etc/flak/tls/tls.crt",
 		},
 	}
 }

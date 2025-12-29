@@ -14,8 +14,8 @@
       "context": ".",
       "dockerfile": "build/Dockerfile",
       "tags": [
-        "ghcr.io/amirhnajafiz/flap-operator:${TAG}",
-        "ghcr.io/amirhnajafiz/flap-operator:latest"
+        "ghcr.io/amirhnajafiz/flak-operator:${TAG}",
+        "ghcr.io/amirhnajafiz/flak-operator:latest"
       ],
       "output": ["type=registry"]
     }

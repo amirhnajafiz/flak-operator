@@ -15,7 +15,7 @@ import (
 
 const (
 	// Prefix indicates environment variables prefix.
-	Prefix = "FLAP_"
+	Prefix = "FLAK_"
 )
 
 // LoggerConfig holds the logger tune parameters.

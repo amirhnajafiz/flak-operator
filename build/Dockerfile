@@ -12,11 +12,11 @@ RUN go mod download
 COPY . .
 
 # build the go app
-RUN GO111MODULE=on CGO_ENABLED=0 go build -o flap ./main.go
+RUN GOOS=linux GOARCH=amd64 GO111MODULE=on CGO_ENABLED=0 go build -o flak
 
 # Minimal alpine image
 FROM alpine:3.21
 
-COPY --from=build /usr/local/app/flap /usr/local/bin/flap
+COPY --from=build /usr/local/app/flak /usr/local/bin/flak
 
-ENTRYPOINT ["/usr/local/bin/flap"]
+ENTRYPOINT ["/usr/local/bin/flak"]

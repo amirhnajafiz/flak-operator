@@ -2,35 +2,35 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: flap
-  name: flap
-  namespace: flap-operator
+    app: flak
+  name: flak
+  namespace: flak-operator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flap-operator
+      app: flak-operator
   template:
     metadata:
       labels:
-        app: flap-operator
+        app: flak-operator
     spec:
       containers:
-        - image: ghcr.io/amirhnajafiz/flap-operator:latest
-          name: flap-operator-container
+        - image: ghcr.io/amirhnajafiz/flak-operator:latest
+          name: flak-operator-container
           imagePullPolicy: IfNotPresent
           env:
-            - name: FLAP_LOG_LEVEL
+            - name: FLAK_LOG_LEVEL
               value: "debug"
-            - name: FLAP_JSON_LOG
+            - name: FLAK_JSON_LOG
               value: "false"
-            - name: FLAP_TLS__ENABLE
+            - name: FLAK_TLS__ENABLE
               value: "true"
           volumeMounts:
             - name: tls
-              mountPath: "/etc/flap/tls"
+              mountPath: "/etc/flak/tls"
               readOnly: true
       volumes:
         - name: tls
           secret:
-            secretName: flap-webhook-tls
+            secretName: flak-webhook-tls

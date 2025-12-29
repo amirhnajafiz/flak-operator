@@ -1,9 +1,9 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: "flap-amirhnajafiz.github.io"
+  name: "flak-amirhnajafiz.github.io"
 webhooks:
-  - name: "flap-amirhnajafiz.github.io"
+  - name: "flak-amirhnajafiz.github.io"
     rules:
       - apiGroups: [""]
         apiVersions: ["v1"]
@@ -12,9 +12,9 @@ webhooks:
         scope: "*"
     clientConfig:
       service:
-        namespace: flap-operator
-        name: flap-operator-service
-        path: /mutate/crt
+        namespace: flak-operator
+        name: flak-operator-service
+        path: /mutate
         port: 443
       caBundle: |
         LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMzakNDQWNZQ0NRRFlHcU05a0ZZUjJqQU5CZ2tx
