@@ -31,12 +31,11 @@ func Hook(adm *admission.Admitter) *admissionv1.AdmissionReview {
 	// deep copy pod
 	mpod := pod.DeepCopy()
 
-	// select the hook handler from the hook type
-	switch adm.HookType {
-	case "create_pod":
-		hookOnPodCreate(mpod)
-	case "delete_pod":
+	// call the hook function based on pods delete or create status
+	if pod.DeletionTimestamp != nil {
 		hookOnDeletePod(mpod)
+	} else {
+		hookOnPodCreate(mpod)
 	}
 
 	// generate json patch

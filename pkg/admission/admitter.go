@@ -11,10 +11,9 @@ import (
 
 // Admitter is a container for admission logic.
 type Admitter struct {
-	Codecs   serializer.CodecFactory
-	Logger   *logrus.Entry
-	Request  *admissionv1.AdmissionRequest
-	HookType string
+	Codecs  serializer.CodecFactory
+	Logger  *logrus.Entry
+	Request *admissionv1.AdmissionRequest
 }
 
 // Pod extracts a pod from an admission request.

@@ -18,11 +18,11 @@ func Health(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "OK")
 }
 
-// MutatePod is the webhook main mutation handler.
-func MutatePod(codecs serializer.CodecFactory, hookType string) func(http.ResponseWriter, *http.Request) {
+// MutatePods is the operator's main mutation handler.
+func MutatePods(codecs serializer.CodecFactory) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// init a new logger instance with request uri
-		logger := logrus.WithField("uri", r.RequestURI).WithField("hook", hookType)
+		logger := logrus.WithField("uri", r.RequestURI)
 		logger.Debug("received mutation request")
 
 		// extract the admission request
@@ -35,10 +35,9 @@ func MutatePod(codecs serializer.CodecFactory, hookType string) func(http.Respon
 
 		// create a new admitter
 		adm := admission.Admitter{
-			Codecs:   codecs,
-			Logger:   logger,
-			Request:  in.Request,
-			HookType: hookType,
+			Codecs:  codecs,
+			Logger:  logger,
+			Request: in.Request,
 		}
 
 		// call the hook and store it in a review var

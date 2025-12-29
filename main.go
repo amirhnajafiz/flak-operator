@@ -14,6 +14,7 @@ import (
 )
 
 var (
+	// required variables for working with kubernetes runtime objects
 	scheme = runtime.NewScheme()
 	codecs = serializer.NewCodecFactory(scheme)
 )
@@ -23,16 +24,15 @@ func init() {
 }
 
 func main() {
-	// read configs
+	// load config parameters
 	cfg := configs.LoadConfigs()
 
-	// set logrus logging
+	// set logrus logger
 	logging.SetLogger(cfg.Logger.Level, cfg.Logger.JSON)
 
 	// register http handlers
 	http.HandleFunc("/health", handlers.Health)
-	http.HandleFunc("/mutate/crt", handlers.MutatePod(codecs, "create_pod"))
-	http.HandleFunc("/mutate/del", handlers.MutatePod(codecs, "delete_pod"))
+	http.HandleFunc("/mutate", handlers.MutatePods(codecs))
 
 	// listens to clear text http unless TLS env var is set to "true"
 	if cfg.TLS.Enable {

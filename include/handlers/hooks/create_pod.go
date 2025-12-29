@@ -7,5 +7,10 @@ func hookOnPodCreate(pod *corev1.Pod) {
 		pod.Labels = make(map[string]string)
 	}
 
+	if pod.Finalizers == nil {
+		pod.Finalizers = make([]string, 0)
+	}
+
+	pod.Finalizers = append(pod.Finalizers, "flap-operator")
 	pod.Labels["hook_on_pod"] = "OK"
 }
