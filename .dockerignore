@@ -1,9 +1,12 @@
 .git/
 .github/
 
+bootstrap/
+deployment/
 build/
 k8s/
 tests/
+scripts/
 
 .env
 .gitignore
